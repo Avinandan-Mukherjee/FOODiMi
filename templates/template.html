@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='logo.png') }}">
+</head>
+<body>
+    <div class="whole"></div>
+    <div class="content">
+        <div class="prompt-outside">
+            <textarea name='user_prompt' placeholder="Type Anything if u want something specifically" rows="5" cols="40" class="input-text"></textarea>
+
+            <form method='POST' action="/" class="right-form">
+            <div class="start-button">
+                <button type="submit">Click To Generate</button>
+            </div>
+
+
+        </div>
+        <div class="right-panel">
+            <form method='POST' action="/" class="right-form">
+                <div class="choose-heading">Choose ur Ingridients</div>
+                <div class="dropdown-area">
+                    <div class="dropdown">
+                        {% for k, v in data.items() %}
+                        <details class="dropdown-item">
+                        <summary>{{ k }}</summary>
+                        <div class="option-list">
+                            {% for item in v %}
+                            <label tabindex="0">
+                                <input type="checkbox" name="ingredients" value="{{ item }}"> {{ item }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        </details>
+                        {% endfor %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </form>
+
+
+        <div class="chosen-area">
+            <p class="output-text">
+                {{reply}}
+            </p>
+        </div>
+        <div class="output-area"></div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,356 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.whole {
+    background-image: url('pics/background.png');
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+ 
+}
+
+
+.whole::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.8);
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+
+.whole::after {
+    display: none !important;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    color: black;
+    width: 100vw;
+    height: 100vh;
+}
+
+.selection-area {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.dropdown {
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 18px 0 0 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    max-height: 90vh;
+    overflow-y: auto;
+    backdrop-filter: blur(8px);
+    margin-top: 80px;
+    width: 350px;
+    pointer-events: auto;
+}
+
+.dropdown-item {
+    background: rgba(40, 40, 40, 0.45);
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    color: #fff;
+    backdrop-filter: blur(8px);
+    width: 180px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+}
+
+.dropdown-item:hover {
+    background: rgba(60, 60, 60, 0.55);
+}
+
+.dropdown-item summary {
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.2rem;
+    border-bottom: none;
+    margin-bottom: 0.5rem;
+    outline: none;
+}
+
+.dropdown-item[open] summary {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+}
+
+.dropdown-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.dropdown-item summary:focus {
+    outline: none;
+}
+
+
+.dropdown-item summary,
+.dropdown-item .option-list,
+.dropdown-item label {
+    width: 100%;
+    cursor: pointer;
+}
+
+
+.option-list label {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0.2rem;
+    border-radius: 6px;
+    transition: background 0.15s;
+    cursor: pointer;
+}
+.option-list label:hover {
+    background: rgba(255,255,255,0.08);
+}
+.option-list input[type="checkbox"] {
+    margin-right: 0.5em;
+    accent-color: #222;
+    cursor: pointer;
+}
+
+
+.selection-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.dropdown {
+    flex: 1 1 auto;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+
+.right-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 370px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.right-form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.prompt {
+    background: rgba(30,30,30,0.85);
+    border-radius: 12px 12px 0 0;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    width: 100%;
+    pointer-events: auto;
+}
+
+.dropdown-area {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(8px);
+    padding: 1rem 0.5rem;
+    width: 100%;
+    pointer-events: auto;
+}
+
+
+.prompt-outside, .prompt-outside textarea, .start-button, .start-button button, button {
+    all: unset;
+    display: revert;
+    box-sizing: border-box;
+}
+
+.dropdown-area {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(8px);
+    padding: 1rem 0.5rem;
+    width: 100%;
+    border-radius: 0 0 12px 12px;
+    pointer-events: auto;
+}
+
+
+.choose-heading {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.5px;
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 0;
+    padding: 1rem 0.5rem 0 0.5rem;
+}
+
+.dropdown-area {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(8px);
+    padding: 0 0.5rem 1rem 0.5rem;
+    width: 100%;
+    border-radius: 0 0 12px 12px;
+    pointer-events: auto;
+    margin-top: 0;
+}
+
+
+html, body {
+    overflow: hidden !important;
+    height: 100%;
+}
+
+
+.dropdown {
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    width: 100%;
+    max-height: unset;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 0;
+}
+
+.dropdown-item {
+    background: rgba(40, 40, 40, 0.45);
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    color: #fff;
+    backdrop-filter: blur(8px);
+    width: 100%;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+}
+
+.start-button {
+    background: rgba(30,30,30,0.85);
+    border-radius: 0 0 12px 12px;
+    padding: 0.7rem 1.5rem;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    pointer-events: auto;
+    cursor: pointer
+}
+
+.start-button:hover{
+    scale: 105%;
+}
+
+
+.prompt, .start-button, .dropdown, .selection-area {
+    position: static !important;
+    right: unset !important;
+    top: unset !important;
+    bottom: unset !important;
+    left: unset !important;
+    max-width: unset !important;
+}
+
+
+.prompt-outside {
+    width: 100%;
+    max-width: 500px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 32px;
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    color: inherit;
+}
+.prompt-outside textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.12);
+    color: #fffdfd;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem;
+    font-size: 1rem;
+    resize: vertical;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+
+.right-panel .prompt, .right-panel .prompt textarea {
+    display: none !important;
+}
+
+
+
+
+
+
+
+
+.output-text {
+    color: white;
+    background-color: #acacac7c;
+    height: 100px;
+    width: 300px;
+    border-radius: 10px;
+}
+
+
+
+
+
+@media (max-width: 900px) {
+    .right-panel {
+        width: 100vw;
+        min-width: unset;
+        max-width: unset;
+    }
+    .dropdown-area, .choose-heading {
+        width: 100vw;
+    }
+}
