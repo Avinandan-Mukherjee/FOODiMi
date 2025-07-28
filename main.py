@@ -84,7 +84,7 @@ def hello_world():
 
     reply = ""
     try:
-        model = genai.GenerativeModel("gemini-pro")
+        model = genai.GenerativeModel("gemini-2.5-pro")
         response = model.generate_content(behave)
         reply = response.text
     except Exception as e:
