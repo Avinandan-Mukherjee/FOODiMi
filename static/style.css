@@ -412,7 +412,6 @@ html, body {
 
 .logo-image img{
     height: 10vh;
-    background-color: #16000046;
     filter: invert(100%);
 }
 
