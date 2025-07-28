@@ -5,23 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foodie</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='pics/logo.png') }}">
 </head>
 <body>
     <div class="whole"></div>
     <div class="content">
-        <div class="prompt-outside">
-            <textarea name='user_prompt' placeholder="Type Anything if u want something specifically" rows="5" cols="40" class="input-text"></textarea>
-
-            <form method='POST' action="/" class="right-form">
-            <div class="start-button">
-                <button type="submit">Click To Generate</button>
-            </div>
-
-
+        <div class="logo-image">
+            <img src="{{ url_for('static', filename='pics/logo.png') }}" alt="FOODiMi">
         </div>
-        <div class="right-panel">
-            <form method='POST' action="/" class="right-form">
+        <form method='POST' action="/" class="main-form">
+            <div class="prompt-outside">
+                <div class="prompt-form">
+                    <textarea name='user_prompt' placeholder="Type Anything if u want something specifically" rows="5" cols="40" class="input-text"></textarea>
+                    <div class="start-button">
+                        <button type="submit">Click To Generate</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chosen-area">
+                <div class="output-text">
+                    {{reply}}
+                </div>
+            </div>
+            <div class="right-panel">
                 <div class="choose-heading">Choose ur Ingridients</div>
                 <div class="dropdown-area">
                     <div class="dropdown">
@@ -39,17 +46,8 @@
                         {% endfor %}
                     </div>
                 </div>
-            </form>
-        </div>
-    </form>
-
-
-        <div class="chosen-area">
-            <p class="output-text">
-                {{reply}}
-            </p>
-        </div>
-        <div class="output-area"></div>
+            </div>
+        </form>
     </div>
     
 </body>

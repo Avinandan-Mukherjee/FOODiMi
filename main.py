@@ -9,6 +9,8 @@ client = genai.Client(api_key = api_key )
 
 
 from flask import Flask, render_template, url_for, request
+from markupsafe import Markup
+import markdown2
 
 app = Flask(__name__)
 
@@ -89,8 +91,10 @@ def hello_world():
     ):
         reply += chunks.text or ""
 
+    
+    html_reply = Markup(markdown2.markdown(reply))
 
-    return render_template('template.html', data = raw_food_items, reply = reply)
+    return render_template('template.html', data = raw_food_items, reply = html_reply)
 
 
 
