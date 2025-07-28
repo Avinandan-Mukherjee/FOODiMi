@@ -1,12 +1,10 @@
-from google import genai
+import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 load_dotenv()
 
-api_key=os.getenv("GEMINI_API")
-client = genai.Client(api_key = api_key )
-
-
+api_key = os.getenv("GEMINI_API")
+genai.configure(api_key=api_key)
 
 from flask import Flask, render_template, url_for, request
 from markupsafe import Markup
@@ -14,91 +12,87 @@ import markdown2
 
 app = Flask(__name__)
 
-
-
-#list of raw materials
+# List of raw materials
 raw_food_items = {
-    "fruits": [
-        "apple", "banana", "mango", "grapes", "orange", "papaya", "pineapple", "guava",
-        "watermelon", "muskmelon", "pomegranate", "strawberry", "blueberry", "blackberry",
-        "pear", "peach", "plum", "cherry", "kiwi", "dragon fruit", "lychee"
+    "Fruits": [
+        "Apple", "Banana", "Mango", "Grapes", "Orange", "Papaya", "Pineapple", "Guava",
+        "Watermelon", "Muskmelon", "Pomegranate", "Strawberry", "Blueberry", "Blackberry",
+        "Pear", "Peach", "Plum", "Cherry", "Kiwi", "Dragon Fruit", "Lychee"
     ],
-    "vegetables": [
-        "cabbage", "carrot", "broccoli", "spinach", "potato", "tomato", "cauliflower",
-        "cucumber", "capsicum", "brinjal", "bitter gourd", "ridge gourd", "bottle gourd",
-        "ladyfinger", "zucchini", "pumpkin", "radish", "turnip", "green beans", "peas"
+    "Vegetables": [
+        "Cabbage", "Carrot", "Broccoli", "Spinach", "Potato", "Tomato", "Cauliflower",
+        "Cucumber", "Capsicum", "Brinjal", "Bitter Gourd", "Ridge Gourd", "Bottle Gourd",
+        "Ladyfinger", "Zucchini", "Pumpkin", "Radish", "Turnip", "Green Beans", "Peas"
     ],
-    "leafy_greens": [
-        "spinach", "lettuce", "kale", "fenugreek leaves", "coriander leaves", "mustard greens",
-        "amaranth", "curry leaves", "mint", "basil"
+    "Leafy Greens": [
+        "Spinach", "Lettuce", "Kale", "Fenugreek Leaves", "Coriander Leaves", "Mustard Greens",
+        "Amaranth", "Curry Leaves", "Mint", "Basil"
     ],
-    "grains": [
-        "rice", "wheat", "oats", "quinoa", "barley", "millet", "sorghum", "corn", "buckwheat"
+    "Grains": [
+        "Rice", "Wheat", "Oats", "Quinoa", "Barley", "Millet", "Sorghum", "Corn", "Buckwheat"
     ],
-    "legumes_and_pulses": [
-        "lentils", "chickpeas", "kidney beans", "black beans", "green gram", "split peas",
-        "soybeans", "pigeon peas", "mung beans"
+    "Legumes And Pulses": [
+        "Lentils", "Chickpeas", "Kidney Beans", "Black Beans", "Green Gram", "Split Peas",
+        "Soybeans", "Pigeon Peas", "Mung Beans"
     ],
-    "nuts_and_seeds": [
-        "almonds", "cashews", "walnuts", "peanuts", "pistachios", "hazelnuts", "flaxseeds",
-        "chia seeds", "pumpkin seeds", "sunflower seeds", "sesame seeds"
+    "Nuts And Seeds": [
+        "Almonds", "Cashews", "Walnuts", "Peanuts", "Pistachios", "Hazelnuts", "Flaxseeds",
+        "Chia Seeds", "Pumpkin Seeds", "Sunflower Seeds", "Sesame Seeds"
     ],
-    "roots_and_tubers": [
-        "ginger", "garlic", "beetroot", "sweet potato", "yam", "turmeric root", "taro root",
-        "radish", "onion"
+    "Roots And Tubers": [
+        "Ginger", "Garlic", "Beetroot", "Sweet Potato", "Yam", "Turmeric Root", "Taro Root",
+        "Radish", "Onion"
     ],
-    "herbs": [
-        "mint", "basil", "coriander", "parsley", "thyme", "oregano", "rosemary", "dill",
-        "chives", "sage"
+    "Herbs": [
+        "Mint", "Basil", "Coriander", "Parsley", "Thyme", "Oregano", "Rosemary", "Dill",
+        "Chives", "Sage"
     ],
-    "spices": [
-        "turmeric", "cumin", "black pepper", "cardamom", "clove", "cinnamon", "nutmeg",
-        "mustard seeds", "fenugreek seeds", "coriander seeds", "bay leaf", "star anise"
+    "Spices": [
+        "Turmeric", "Cumin", "Black Pepper", "Cardamom", "Clove", "Cinnamon", "Nutmeg",
+        "Mustard Seeds", "Fenugreek Seeds", "Coriander Seeds", "Bay Leaf", "Star Anise"
     ],
-    "mushrooms": [
-        "button mushroom", "shiitake", "oyster mushroom", "portobello", "enoki"
+    "Fish": [
+        "Rohu", "Katla", "Hilsa", "Pomfret", "Salmon", "Mackerel", "Tuna", "Prawns",
+        "Bhetki", "Sardine", "Anchovy"
     ],
-    "other": [
-        "coconut", "tamarind", "raw jackfruit", "lemon", "lime", "green chili"
+    "Meat": [
+        "Chicken", "Goat", "Mutton", "Beef", "Pork", "Duck", "Turkey", "Quail", "Rabbit"
+    ],
+    "Animal Products": [
+        "Egg", "Milk", "Cheese", "Butter", "Paneer", "Curd", "Cream"
+    ],
+    "Mushrooms": [
+        "Button Mushroom", "Shiitake", "Oyster Mushroom", "Portobello", "Enoki"
+    ],
+    "Other": [
+        "Coconut", "Tamarind", "Raw Jackfruit", "Lemon", "Lime", "Green Chili"
     ]
 }
 
 
-
-
-
-
 @app.route("/", methods=['GET', 'POST'])
 def hello_world():
-
     chosen = request.form.getlist("ingredients")
     given_prompt = request.form.get("user_prompt") 
 
-
-
-    #gemini
-    
+    # Gemini
     behave = f"""
-    You are mainly designed to say food recipies from a few given ingridients. 
+    You are mainly designed to say food recipes from a few given ingredients. 
 
-    The ingridients are {chosen}. Now provide a good food recipie on this ingridients, with this request {given_prompt}
+    The ingredients are {chosen}. Now provide a good food recipe using these ingredients, with this request: {given_prompt}
     """
 
     reply = ""
-    for chunks in client.models.generate_content_stream(
-        model="gemini-2.5-flash", 
-        contents=behave
-    ):
-        reply += chunks.text or ""
+    try:
+        model = genai.GenerativeModel("gemini-pro")
+        response = model.generate_content(behave)
+        reply = response.text
+    except Exception as e:
+        reply = f"Error generating recipe: {str(e)}"
 
-    
     html_reply = Markup(markdown2.markdown(reply))
 
-    return render_template('template.html', data = raw_food_items, reply = html_reply)
+    return render_template('template.html', data=raw_food_items, reply=html_reply)
 
-
-
-
-
-app.run(debug=True)
-
+if __name__ == "__main__":
+    app.run(debug=True)
